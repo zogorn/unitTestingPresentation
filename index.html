@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Angular Unit Testing</title>
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/blood.css" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css" />
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? 'css/print/pdf.css'
+        : 'css/print/paper.css';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <link rel="icon" type="image/x-icon" href="logo.png" />
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h3>Angular Unit Testing</h3>
+        </section>
+
+        <section>
+          <h4>what will we introduce today</h4>
+          <hr />
+          <ul>
+            <li>Angular Automation Testing</li>
+            <li>Basic examples</li>
+            <li>Advanced examples</li>
+            <li>Resources</li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h4>Angular Automation Testing</h4>
+            <hr />
+            <ul>
+              <li>Jasmine test framework</li>
+              <li>Karma test runner</li>
+              <li>CI/CD Smother</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Basic Angular CLI</h3>
+            <hr />
+            <pre><code>ng test</code></pre>
+            <pre><code>ng test --code-coverage</code></pre>
+          </section>
+
+          <section>
+            <h4>Jasmine and Karma with Angular</h4>
+            <hr />
+            <img src="./images/01-karma-browser.png" />
+          </section>
+          <section>
+            <h4>Jasmine and Karma with Angular</h4>
+            <hr />
+            <img src="./images/02-jasmin-init.png" />
+            <img src="./images/03-code-coverage.png" />
+          </section>
+
+          <section>
+            <h4>Show Coverage Table</h4>
+            <hr />
+            <img src="./images/04-coverage-table.png" />
+          </section>
+
+          <section>
+            <h3>Jasmine</h3>
+            <hr />
+            <img src="./images/06-jasmin-logo.png" />
+            <img src="./images/05-jasmin-sample-code.png" />
+          </section>
+
+          <section>
+            <h3>Karma in use</h3>
+            <hr />
+            <ul>
+              <li>
+                Any file ends with
+                <code>*.spec.ts</code> will be executed by karma as a test file
+              </li>
+              <li>Take a look at <code>karma.conf.js</code> file</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section><h2>code break</h2></section>
+          <!-- <section><img src="./images/ro7na-fdahia.jpg" /></section> -->
+          <!-- <section><img src="./images/lemby.jpg" /></section> -->
+          <!-- <section><img src="./images/lemby-faceApp.jpeg" /></section> -->
+          <!-- <section><img src="./images/etfd7na.jpg" /></section> -->
+        </section>
+
+        <section>
+          <section>Component Integration Testing VS e2e / Protractor</section>
+          <section>
+            <h4>Basics Info About Angular Integration Testing</h4>
+            <hr />
+            <ul>
+              <li>Basic interaction with HTML only</li>
+              <li>Mock / Spy any external calls</li>
+              <li>Tests any <em>"functionality"</em> the user will do</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>
+              Angular Testing Utilities
+            </h3>
+          </section>
+          <section>
+            <h4>Angular Testing Utilities</h4>
+            <hr />
+            <pre><code data-trim data-noescape>
+                import { TestBed,ComponentFixture } from '@angular/core/testing';
+                import { RouterTestingModule } from '@angular/router/testing';
+                import { DebugElement } from '@angular/core';
+                import { async } from '@angular/core/testing';
+                import { By } from '@angular/platform-browser';
+              </code></pre>
+          </section>
+
+          <section>
+            <h3>TestBed</h3>
+            <hr />
+            <small
+              >Configures and initializes environment for unit testing and
+              provides methods for creating components and services in unit
+              tests.</small
+            >
+            <img src="./images/testBed.png" />
+          </section>
+
+          <section>
+            <h3>Fixture</h3>
+            <hr />
+            <img src="./images/fixture.png" />
+          </section>
+        </section>
+
+        <section>
+          <section><h3>Dom manipulation</h3></section>
+
+          <section>
+            <h4>
+              Dom element selection
+            </h4>
+            <hr />
+            <pre><code data-trim data-noescape>
+              // Single Element
+              const element = this.fixture.debugElement.query(By.css(tagName));
+              // All Elements
+              const elements = this.fixture.debugElement.queryAll(By.css(tagName));
+
+              // Result -> nativeElement
+              element.nativeElement.textContent
+            </code></pre>
+          </section>
+
+          <section>Helper Dom Class</section>
+        </section>
+        <!-- NO_ERRORS_SCHEMA -->
+        <!-- fixture.detectChanges() -->
+        <!-- fixture.whenStable().then() -->
+        <!-- dispatchEvent('element', 'input') -->
+        <!-- link.nativeElement.click() -->
+        <!-- button.triggerEventHandler('click', null or any passed value to the click event) -->
+        <!-- expect().toHaveBeenCalled() -->
+        <!-- expect().toHaveBeenCalledWith('123') -->
+        <section>
+          <section><h4>Working with services, components</h4></section>
+
+          <section>
+            <h4>Spy on service methods</h4>
+            <hr />
+            <pre><code data-trim data-noescape>
+                let productServiceMock: any;
+                productServiceMock =
+                    jasmine.createSpyObj('ProductService', ['getProducts']);
+
+                // or any return value from the helpers
+                productServiceMock.getProducts.and.returnValue(of([]));
+              </code></pre>
+          </section>
+
+          <section>
+            <h4>Dummy Stub</h4>
+            <hr />
+            <pre><code data-trim data-noescape>
+              class ProductServiceStub {}
+            </code></pre>
+          </section>
+
+          <section>
+            <h4>TestBed Modulation</h4>
+            <hr />
+            <pre><code data-trim data-noescape>
+              TestBed.configureTestingModule({
+                declarations: [
+                  ProductsListComponent
+                ],
+                imports: [
+                  ReactiveFormsModule,
+                  ImageCropperModule,
+                  RouterTestingModule
+                ],
+                providers: [
+                  {provide: ProductService, useValue: productServiceMock},
+                  {provide: ProductService, useClass: ProductServiceStub}
+                ]
+              }).compileComponents();
+            </code></pre>
+          </section>
+
+          <section>
+            <h4>Fixture with Component</h4>
+            <hr />
+            <pre><code data-trim data-noescape>
+                let fixture = TestBed.createComponent(ProductsListComponent);
+                let component = fixture.componentInstance;
+                fixture.detectChanges();
+                let dh = new DOMHelper(fixture);
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Resources</h3>
+            <img src="./images/da7e7.jpg" />
+          </section>
+
+          <section>
+            <h3>Resources</h3>
+            <hr />
+            <ul>
+              <li>
+                <a href="https://angular.io/guide/testing"
+                  >Angular Testing Guide</a
+                >
+              </li>
+              <li>
+                <a href="https://blog.gurock.com/unit-testing-tdd-bdd/">
+                  TDD VS BDD
+                </a>
+              </li>
+
+              <li>
+                <a href="https://www.youtube.com/watch?v=JqO7bTsqzAI">
+                  Angular Testing Part 2 - Component Integration Testing for
+                  Angular
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="https://www.youtube.com/playlist?list=PL8jcXf-CLpxolmjV5_taFP0c5LyCveDF1"
+                >
+                  Advanced Web Apps 2019 | Unit Testing in Angular
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="https://www.udemy.com/course/the-complete-angular-master-class"
+                >
+                  The Complete Angular Course: Beginner to Advanced "Mosh
+                  Hamedani"
+                </a>
+              </li>
+            </ul>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        hash: true,
+        dependencies: [
+          {
+            src: 'plugin/markdown/marked.js',
+          },
+          {
+            src: 'plugin/markdown/markdown.js',
+          },
+          {
+            src: 'plugin/highlight/highlight.js',
+          },
+          {
+            src: 'plugin/notes/notes.js',
+            async: true,
+          },
+        ],
+      });
+    </script>
+  </body>
+</html>
